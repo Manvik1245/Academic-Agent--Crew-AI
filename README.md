@@ -21,9 +21,7 @@ The system implements a custom `notion_connection` tool designed to interface wi
 - **Contextual Retrieval:** Bridges the gap between raw API JSON responses and agent-readable text, allowing the agent to perform RAG (Retrieval-Augmented Generation) on personal class notes and lecture materials.
 
 ### 2. Autonomous Coding & Orchestration
-The agentic framework is structured to assist in software engineering tasks, specifically focusing on local development support.
-- **Custom Tool Creation:** Utilizes `crewai.tools` to extend agent capabilities, enabling the creation of bespoke tools for local file manipulation, script debugging, and data processing.
-- **Multi-Agent Orchestration:** Deploys specialized agents to break down complex coding prompts into actionable workflows, managing task dependencies and sub-task delegation within the crew.
+The agentic framework is structured to assist in software engineering tasks, specifically focusing on local deployement and helping to practice various coding concepts such as Data Structures in various languages. It asks questions back and forth to give more customizable questions too.
 
 
 
