@@ -130,7 +130,7 @@ class AcademicAgent:
                 "3. Once the assigned agent returns an answer, you MUST immediately output that exact answer as your Final Output.\n"
                 "4. NEVER execute the same tool twice for the same query."
             ),
-            expected_output= "A clear, accurate response to the user's request.",
+            expected_output= "A well-formatted, clean response in Markdown. Use bullet points for lists, bold text for key terms, and code blocks for any code segments. Do not output raw dictionaries or JSON.",
         )
 
     @crew
@@ -146,6 +146,9 @@ class AcademicAgent:
             verbose= True,
             max_iter=3
         )
-        
+def crew_operations(query):
+    crew= AcademicAgent()
+    return crew.crew().kickoff(inputs={"query": query, "history": ""})
+
 
 
