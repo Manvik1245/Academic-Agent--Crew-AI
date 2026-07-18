@@ -79,7 +79,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV '/Users/manvik/Library/CloudStorage/OneDrive-UniversityofMassachusetts/Academic Agent set up/.venv'
+set -gx VIRTUAL_ENV '/Users/manvik/Desktop/Academic Agent set up/.venv'
 if string match -qr 'CYGWIN|MSYS|MINGW' (uname); and command -s cygpath >/dev/null
     set -gx VIRTUAL_ENV (cygpath -u "$VIRTUAL_ENV")
 end
@@ -94,8 +94,8 @@ set -gx PATH "$VIRTUAL_ENV"'/bin' $PATH
 
 # Prompt override provided?
 # If not, just use the environment name.
-if test -n 'personal-agent-workspace'
-    set -gx VIRTUAL_ENV_PROMPT 'personal-agent-workspace'
+if test -n 'Academic Agent set up'
+    set -gx VIRTUAL_ENV_PROMPT 'Academic Agent set up'
 else
     set -gx VIRTUAL_ENV_PROMPT (basename "$VIRTUAL_ENV")
 end

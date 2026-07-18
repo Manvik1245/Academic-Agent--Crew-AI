@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' '/Users/manvik/Library/CloudStorage/OneDrive-UniversityofMassachusetts/Academic Agent set up/.venv/bin/python' "$0" "$@"
+'''exec' '/Users/manvik/Desktop/Academic Agent set up/.venv/bin/python3' "$0" "$@"
 ' '''
 """A command line tool for extracting text and images from PDF and
 output it to plain text, html, xml or tags.

@@ -26,9 +26,9 @@
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-@for %%i in ("/Users/manvik/Library/CloudStorage/OneDrive-UniversityofMassachusetts/Academic Agent set up/.venv") do @set "VIRTUAL_ENV=%%~fi"
+@for %%i in ("/Users/manvik/Desktop/Academic Agent set up/.venv") do @set "VIRTUAL_ENV=%%~fi"
 
-@set "VIRTUAL_ENV_PROMPT=personal-agent-workspace"
+@set "VIRTUAL_ENV_PROMPT=Academic Agent set up"
 @if NOT DEFINED VIRTUAL_ENV_PROMPT (
     @for %%d in ("%VIRTUAL_ENV%") do @set "VIRTUAL_ENV_PROMPT=%%~nxd"
 )

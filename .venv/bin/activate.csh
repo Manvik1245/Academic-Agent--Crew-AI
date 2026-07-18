@@ -31,15 +31,15 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV '/Users/manvik/Library/CloudStorage/OneDrive-UniversityofMassachusetts/Academic Agent set up/.venv'
+setenv VIRTUAL_ENV '/Users/manvik/Desktop/Academic Agent set up/.venv'
 
 set _OLD_VIRTUAL_PATH="$PATH:q"
 setenv PATH "$VIRTUAL_ENV:q/bin:$PATH:q"
 
 
 
-if ('personal-agent-workspace' != "") then
-    setenv VIRTUAL_ENV_PROMPT 'personal-agent-workspace'
+if ('Academic Agent set up' != "") then
+    setenv VIRTUAL_ENV_PROMPT 'Academic Agent set up'
 else
     setenv VIRTUAL_ENV_PROMPT "$VIRTUAL_ENV:t:q"
 endif

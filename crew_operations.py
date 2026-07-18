@@ -68,7 +68,55 @@ def notion_connection():
     except Exception as e:
         return {"error": f"An unexpected error occurred: {str(e)}"}
 
-   
+@tool("Notion page content")
+def notion_page_content(page_id: str):
+    """
+    Retrieves the content of a specific Notion page given its ID.
+    Requires the page_id argument.
+    """
+    url = f"https://api.notion.com/v1/blocks/{page_id}/children"
+    headers = {
+        "Authorization": f"Bearer {NOTION_API_TOKEN}",
+        "Notion-Version": "2022-06-28",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status() 
+        
+        data = response.json()
+        results = data.get("results", [])
+        complied_content = ""
+        
+        for block in results:
+            block_type = block.get("type", "")
+            block_content = block.get(block_type, {})
+            
+            if block_type == "paragraph":
+                text_items = block_content.get("text", [])
+                for item in text_items:
+                    complied_content += item.get("plain_text", "") + "\n"
+            elif block_type == "heading_1":
+                text_items = block_content.get("text", [])
+                for item in text_items:
+                    complied_content += "# " + item.get("plain_text", "") + "\n"
+            elif block_type == "heading_2":
+                text_items = block_content.get("text", [])
+                for item in text_items:
+                    complied_content += "## " + item.get("plain_text", "") + "\n"
+            elif block_type == "heading_3":
+                text_items = block_content.get("text", [])
+                for item in text_items:
+                    complied_content += "### " + item.get("plain_text", "") + "\n"
+        
+            
+        return {"content": complied_content}
+        
+    except requests.exceptions.HTTPError as http_err:
+        return {"error": f"HTTP error occurred: {http_err}"}
+    except Exception as e:
+        return {"error": f"An unexpected error occurred: {str(e)}"}
 @CrewBase
 class AcademicAgent:
     llm_config = LLM(
@@ -85,7 +133,7 @@ class AcademicAgent:
             role= "Notion Academic Agent",
             goal= "To assist in academic preperation by providing information and then generating new resources according to my request using my Notion classnotes.",
             backstory= "I am a student who is preparing for my academic exams. I have a lot of classnotes in my Notion workspace, and I want to use them to generate new resources that can help me in my studies.",
-            tools= [notion_connection],
+            tools= [notion_connection, notion_page_content],
             constraints= [
                 "I can only use the information that is available in my Notion workspace.",
                 "I cannot access any other information outside of my Notion workspace.",
@@ -95,7 +143,7 @@ class AcademicAgent:
             ],
             llm= self.llm_config,
             verbose= True,
-            max_iter=3,
+            max_iter=50,
             allow_delegation=False
         )
 

@@ -58,8 +58,8 @@ deactivate -nondestructive
 $VIRTUAL_ENV = $BASE_DIR
 $env:VIRTUAL_ENV = $VIRTUAL_ENV
 
-if ("personal-agent-workspace" -ne "") {
-    $env:VIRTUAL_ENV_PROMPT = "personal-agent-workspace"
+if ("Academic Agent set up" -ne "") {
+    $env:VIRTUAL_ENV_PROMPT = "Academic Agent set up"
 }
 else {
     $env:VIRTUAL_ENV_PROMPT = $( Split-Path $env:VIRTUAL_ENV -Leaf )

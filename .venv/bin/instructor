@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' '/Users/manvik/Library/CloudStorage/OneDrive-UniversityofMassachusetts/Academic Agent set up/.venv/bin/python' "$0" "$@"
+'''exec' '/Users/manvik/Desktop/Academic Agent set up/.venv/bin/python3' "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import sys
