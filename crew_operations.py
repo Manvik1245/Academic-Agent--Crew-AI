@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from crewai import Agent, Crew, Process, Task,LLM
 from crewai.project import CrewBase, agent, crew,task
 from crewai.tools import tool
+from concurrent.futures import ThreadPoolExecutor
 os.environ["LITELLM_DROP_PARAMS"] = "True"
 os.environ["LITELLM_DISABLE_PROMPT_CACHING"] = "True"
 NOTION_DATABASE_ID = os.environ.get("NOTION_DATABASE_ID")
@@ -47,16 +48,15 @@ def notion_connection():
             properties = result.get("properties", {})
             page_id = result.get("id", "")
             
-            # DYNAMIC LOOKUP: Find the property that is of type 'title'
             title_prop = next(
                 (prop for prop in properties.values() if prop.get("type") == "title"),
                 None
             )
             
-            # Extract plain text from the title property
+           
             title_text = "No Title"
             if title_prop and title_prop.get("title"):
-                # 'plain_text' is the safest way to get the readable title string
+               
                 title_text = title_prop["title"][0].get("plain_text", "No Title")
             
             complied += f"Title: {title_text}, Page ID: {page_id}\n"
@@ -120,12 +120,18 @@ def notion_page_content(page_id: str):
 @CrewBase
 class AcademicAgent:
     llm_config = LLM(
-        model="gemini/gemini-3.5-flash",
+        model="llama-3.3-70b-versatile",
         api_key=os.environ.get("OPENROUTER_API_KEY"),
+        base_url=os.environ.get("OPENAI_API_BASE"),
         temperature=0.1,
         max_tokens=1000,
         top_p=0.2
     )
+    
+    def crew_exec(self, query):
+        with ThreadPoolExecutor() as executor:
+            future = executor.submit(self.crew().kickoff, inputs={"query": query, "history": ""})
+            return future.result()
 
     @agent
     def academic_agent(self):
@@ -194,9 +200,11 @@ class AcademicAgent:
             verbose= True,
             max_iter=3
         )
+        
 def crew_operations(query):
-    crew= AcademicAgent()
-    return crew.crew().kickoff(inputs={"query": query, "history": ""})
+    agent= AcademicAgent()
+    return agent.crew_exec(query)
+
 
 
 
