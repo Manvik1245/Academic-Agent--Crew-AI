@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 .venv_pypy/
 node_modules/
+.venv/
+.venv_pypy/
