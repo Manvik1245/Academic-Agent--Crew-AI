@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+.venv_pypy/
+node_modules/
+.venv/
+.venv_pypy/
+.venv/
+.crewai/
+*.lock
+.venv/
+.crewai/
+*.lock

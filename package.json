@@ -1,0 +1,24 @@
+{
+  "name": "academic-agent-set-up",
+  "version": "1.0.0",
+  "description": "A highly specialized, multi-agent orchestration framework built to automate academic research, note synthesis, and software development workflows. This project leverages **CrewAI** for autonomous agent coordination and **Gemini Flash 3.5** for high-throughput, low-latency reasoning.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manvik1245/Academic-Agent--Crew-AI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Manvik1245/Academic-Agent--Crew-AI/issues"
+  },
+  "homepage": "https://github.com/Manvik1245/Academic-Agent--Crew-AI#readme",
+  "dependencies": {
+    "@notionhq/notion-mcp-server": "^2.5.1"
+  }
+}
