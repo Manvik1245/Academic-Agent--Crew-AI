@@ -4,11 +4,15 @@ import requests
 from dotenv import load_dotenv
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.tools import tool
+<<<<<<< HEAD
 from mcp import StdioServerParameters
 from crewai_tools import MCPServerAdapter
 from crewai.tools import tool as crewai_tool
 import streamlit as st
 import time
+=======
+import streamlit as st
+>>>>>>> origin/main
 
 os.environ["LITELLM_DROP_PARAMS"] = "True"
 os.environ["LITELLM_DISABLE_PROMPT_CACHING"] = "True"
@@ -32,6 +36,7 @@ def get_notion_mcp():
 notion_mcp_server = get_notion_mcp()
 
     """
+<<<<<<< HEAD
 notion_mcp_server = StdioServerParameters(
     command="npx",
     args=["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
@@ -42,6 +47,9 @@ notion_mcp_server = StdioServerParameters(
 )
 
 
+=======
+notion_mcp_server = None
+>>>>>>> origin/main
 
 
 def _notion_headers():
@@ -54,7 +62,11 @@ def _notion_headers():
     }
 
 
+<<<<<<< HEAD
 @crewai_tool("Notion connection")
+=======
+@tool("Notion connection")
+>>>>>>> origin/main
 def notion_connection(_: str = ""):
     """List pages in the configured Notion database."""
     if not NOTION_DATABASE_ID:
@@ -79,7 +91,11 @@ def notion_connection(_: str = ""):
         return {"error": f"Notion connection failed: {exc}"}
 
 
+<<<<<<< HEAD
 @crewai_tool("Notion page content")
+=======
+@tool("Notion page content")
+>>>>>>> origin/main
 def notion_page_content(page_id: str):
     """Retrieve paragraph content from a Notion page."""
     try:
@@ -106,6 +122,7 @@ llm_config = LLM(
 )
 
 
+<<<<<<< HEAD
 
 
 def run_crew(query, chat_history=None):
@@ -131,6 +148,9 @@ def run_crew(query, chat_history=None):
         
         
         coding_agent = Agent(
+=======
+coding_agent = Agent(
+>>>>>>> origin/main
     role="Coding Help Agent",
     goal="To assist in coding, algorithms, and data structures by guiding the user interactively.",
     backstory="An EX-FAANG senior developer training the user for coding exams.",
@@ -138,6 +158,7 @@ def run_crew(query, chat_history=None):
     verbose=True,
     max_iter=3,
     allow_delegation=False
+<<<<<<< HEAD
     )
 
         academic_agent = Agent(
@@ -183,3 +204,47 @@ def run_crew(query, chat_history=None):
 
 
 
+=======
+)
+
+academic_agent = Agent(
+    role="Notion Academic Agent",
+    goal="Retrieve relevant notes and study materials from Notion using search and page content tools.",
+    backstory="You are an academic researcher equipped with tools to query Notion databases and fetch page contents.",
+    tools=[notion_connection, notion_page_content],
+    llm=llm_config,
+    allow_delegation=False,
+    max_iter=4, 
+    verbose=True
+)
+
+def run_crew(query):
+    
+    task = Task(
+        description=f"Analyze and fulfill the user request: '{query}'",
+        expected_output="A helpful and accurate Markdown response answering the user request clearly.",
+    )
+
+    crew = Crew(
+        agents=[coding_agent, academic_agent],
+        tasks=[task],
+        process=Process.hierarchical,
+        manager_llm=llm_config,
+        max_rpm=15,
+        verbose=True
+    )
+
+    import time
+    for attempt in range(3):
+        try:
+            result = crew.kickoff(inputs={"query": query})
+            if hasattr(result, 'raw') and result.raw:
+                return result.raw
+            return str(result)
+        except Exception as e:
+            if "429" in str(e) or "rate_limit" in str(e).lower():
+                time.sleep(8)
+            else:
+                raise e
+    return "Error: Request rate limit exceeded. Please try again in a few seconds."
+>>>>>>> origin/main

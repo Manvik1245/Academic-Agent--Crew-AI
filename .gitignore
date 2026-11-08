@@ -6,9 +6,12 @@ __pycache__/
 node_modules/
 .venv/
 .venv_pypy/
+<<<<<<< HEAD
 .venv/
 .crewai/
 *.lock
 .venv/
 .crewai/
 *.lock
+=======
+>>>>>>> origin/main

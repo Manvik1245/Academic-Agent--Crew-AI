@@ -27,10 +27,18 @@ if user_query := st.chat_input("Ask me anything about your academic work!"):
     with st.chat_message("assistant"):
         with st.spinner("Agent is thinking..."):
             from crew_operations import run_crew as crew_operations
+<<<<<<< HEAD
             response = crew_operations(user_query, chat_history= st.session_state.history)
             st.write(response)
     st.session_state.history.append({"user": user_query, "response": response})
 
+=======
+            response = crew_operations(user_query)
+            st.write(response)
+    st.session_state.history.append({"user": user_query, "response": response})
+
+
+>>>>>>> origin/main
 if st.button("Clear"):
     st.session_state.history = []
     st.rerun()
